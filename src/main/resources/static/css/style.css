@@ -1,12 +1,13 @@
 body {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Asegura que el contenido ocupe al menos la altura completa de la ventana. */
-  background-image: url("../img/welcome-background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el contenido ocupe al menos la altura completa de la ventana. */
+    background-image: url("../img/welcome-background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 70px; /* Ajusta el valor según la altura del navbar */
 }
 
 .wrapper {
@@ -30,4 +31,18 @@ footer {
 
 .text-bg-alta {
   background-color: red;
+}
+
+.custom-table {
+  width: 90vw; /* Establece el ancho al 90% del ancho de la ventana */
+  margin: 0 auto; /* Centra la tabla horizontalmente */
+}
+
+.main-content {
+  min-height: calc(100vh - 100px); /* Ajusta el valor según la altura del footer */
+  padding-bottom: 100px; /* Ajusta el valor según la altura del footer */
+}
+
+.body-content {
+  margin-bottom: 60px; /* Ajusta el valor según la altura del footer */
 }

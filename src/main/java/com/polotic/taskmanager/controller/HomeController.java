@@ -2,14 +2,19 @@ package com.polotic.taskmanager.controller;
 
 import com.polotic.taskmanager.dto.UserEntityDTO;
 import com.polotic.taskmanager.dto.response.TaskResponseDTO;
+import com.polotic.taskmanager.exception.BadRequestException;
 import com.polotic.taskmanager.model.Task;
 import com.polotic.taskmanager.security.user.IUserService;
 import com.polotic.taskmanager.security.user.UserEntity;
 import com.polotic.taskmanager.service.ITaskService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,7 +37,7 @@ public class HomeController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/")
-    public String index(Model model, Principal principal) {
+    public String index(Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
 
         if (principal != null) {
             String userEmail = principal.getName();
@@ -49,7 +54,10 @@ public class HomeController {
         } else {
             model.addAttribute("vista", "index");
             model.addAttribute("titulo", "Inicio");
+            model.addAttribute("loggedIn", principal != null);
         }
+
+        model.addAttribute("userDetails", userDetails);
 
         return "fragments/base";
     }
