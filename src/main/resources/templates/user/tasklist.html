@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.thymeleaf.org">
+  <head th:replace="~{templates/templates :: head}"></head>
+  <body>
+    <!-- Navbar -->
+    <header th:replace="~{templates/templates :: header}"></header>
+
+    <div class="container">
+      <h1 class="text-center my-5" th:text="${titulo}"><strong></strong></h1>
+    </div>
+
+    <div class="container my-5">
+      <a
+        class="btn btn-primary btn-sm"
+        th:href="@{/userEntity/nueva}"
+        th:text="'Nueva tarea'"
+        title="Crear nueva tarea">
+      </a>
+
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Título</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha de creación</th>
+            <th scope="col">Fecha de vencimiento</th>
+            <th scope="col">Prioridad</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Editar</th>
+            <th scope="col">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="tarea : ${tareas}">
+            <th scope="row" th:text="${tarea.id}"></th>
+            <td th:text="${tarea.title}"></td>
+            <td th:text="${tarea.description}"></td>
+            <td th:text="${tarea.creationDate}"></td>
+            <td th:text="${tarea.expirationDate}"></td>
+            <td th:text="${tarea.priority}"></td>
+            <td th:text="${tarea.status}"></td>
+            <td>
+              <a
+                class="btn btn-success btn-sm"
+                th:href="@{/userEntity/editar/{id}(id=${tarea.id})}"
+                th:text="'Editar'"
+                title="Editar tarea">
+              </a>
+            </td>
+            <td>
+              <a
+                class="btn btn-danger btn-sm"
+                th:href="@{/userEntity/eliminar/{id}(id=${tarea.id})}"
+                th:text="'Eliminar'"
+                title="Eliminar tarea"
+                onclick="return confirm('¿Desea eliminar esta tarea?')">
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--  Footer -->
+    <footer th:replace="~{templates/templates :: footer}"></footer>
+  </body>
+</html>

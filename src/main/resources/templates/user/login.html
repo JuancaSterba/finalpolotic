@@ -1,0 +1,42 @@
+<!-- Contenido -->
+<div class="container col-lg-6 col-md-6 col-sm-6 mt-5" th:fragment="contenido">
+
+    <div class="row mt-4">
+        <div th:if="${param.error}" class="col-sm-8">
+            <p class="alert alert-danger alert-dismissible fade show" role="alert">Invalid username or password</p>
+        </div>
+
+        <div th:if="${param.reset_success}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible fade show" role="alert">You have successfully reset your password, please log in here.</p>
+        </div>
+
+        <div th:if="${param.verified}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible fade show" role="alert">This account has already been verified,  please log in here.</p>
+        </div>
+        <div th:if="${param.valid}" class="col-sm-8">
+            <p class="alert alert-info alert-dismissible">Email verified successfully, please log in here.</p>
+        </div>
+
+        <!-- show logout warning alert when logged out. -->
+        <div th:if="${param.logout}" class="col-sm-8">
+            <p class="alert alert-warning">You have been logged out.</p>
+        </div>
+    </div>
+
+    <h2 class="text-center">Iniciar sesión</h2>
+    <br/>
+    <form th:action="@{/login}" method="post" class="needs-validation">
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required
+                   autofocus placeholder="Ingrese su correo electrónico"/>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" required autoFocus placeholder="Ingrese su contraseña"/>
+        </div>
+        <br/>
+        <button type="submit" name="login" id="login" class="btn btn-primary mt-3">Entrar</button>
+    </form>
+</div>
+<!-- Fin Contenido -->

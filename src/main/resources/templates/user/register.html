@@ -1,0 +1,28 @@
+<!-- Contenido -->
+<div class="container col-lg-6 col-md-6 col-sm-6 mt-5" th:fragment="contenido">
+    <div th:if="${param.success}" class=" alert alert-info">
+        Registro exitoso, por favor revise su correo para completar el proceso.
+    </div>
+    <h2 class="text-center">Registro</h2>
+    <form th:action="@{/registration/register}" method="post" th:object="${user}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required placeholder="Ingrese su nombre"/>
+        </div>
+        <div class="mb-3">
+            <label for="surname" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="surname" th:field="*{surname}" required placeholder="Ingrese su apellido"/>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" aria-describedby="emailHelp" required
+                   placeholder="Ingrese su correo electrónico"/>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" th:field="*{password}" required placeholder="Ingrese su contraseña"/>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary mt-3">Entrar</button>
+    </form>
+</div>
