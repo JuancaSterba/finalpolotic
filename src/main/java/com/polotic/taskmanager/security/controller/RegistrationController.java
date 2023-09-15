@@ -36,24 +36,27 @@ public class RegistrationController {
     private final RecaptchaService recaptchaService;
 
     @Value("${recaptcha.sitekey}")
-    private String siteKey;
+    private String sitekey;
 
 
     @GetMapping("/form")
     public String showRegistrationForm(Model model) {
         model.addAttribute("vista", "user/register");
         model.addAttribute("titulo", "Registro");
-        model.addAttribute("sitekey", siteKey);
+        model.addAttribute("sitekey", sitekey);
         model.addAttribute("user", new RegistrationRequest());
         return "fragments/base";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") RegistrationRequest registration,@RequestParam("g-recaptcha-response") String captcha, HttpServletRequest request, Model model) {
+    public String registerUser(@ModelAttribute("user") RegistrationRequest registration,
+                               @RequestParam("g-recaptcha-response") String captcha,
+                               HttpServletRequest request,
+                               Model model) {
 
         boolean captchaValid = recaptchaService.isValid(captcha);
-
-        if (!captchaValid) {
+        System.out.println(captchaValid);
+        if (captchaValid) {
             UserEntity user = userService.registerUser(registration);
             publisher.publishEvent(new RegistrationCompleteEvent(user, UrlUtil.getApplicationUrl(request)));
             return "redirect:/registration/form?success";
