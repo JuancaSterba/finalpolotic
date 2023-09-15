@@ -55,7 +55,6 @@ public class RegistrationController {
                                Model model) {
 
         boolean captchaValid = recaptchaService.isValid(captcha);
-        System.out.println(captchaValid);
         if (captchaValid) {
             UserEntity user = userService.registerUser(registration);
             publisher.publishEvent(new RegistrationCompleteEvent(user, UrlUtil.getApplicationUrl(request)));
