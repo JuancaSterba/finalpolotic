@@ -9,9 +9,11 @@ import com.polotic.taskmanager.security.token.VerificationTokenService;
 import com.polotic.taskmanager.security.user.IUserService;
 import com.polotic.taskmanager.security.user.UserEntity;
 import com.polotic.taskmanager.security.utility.UrlUtil;
+import com.polotic.taskmanager.service.RecaptchaService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,21 +33,35 @@ public class RegistrationController {
     private final VerificationTokenService tokenService;
     private final IPasswordResetTokenService passwordResetTokenService;
     private final RegistrationCompleteEventListener eventListener;
+    private final RecaptchaService recaptchaService;
+
+    @Value("${recaptcha.sitekey}")
+    private String siteKey;
 
 
     @GetMapping("/form")
     public String showRegistrationForm(Model model) {
         model.addAttribute("vista", "user/register");
         model.addAttribute("titulo", "Registro");
+        model.addAttribute("sitekey", siteKey);
         model.addAttribute("user", new RegistrationRequest());
         return "fragments/base";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") RegistrationRequest registration, HttpServletRequest request) {
-        UserEntity user = userService.registerUser(registration);
-        publisher.publishEvent(new RegistrationCompleteEvent(user, UrlUtil.getApplicationUrl(request)));
-        return "redirect:/registration/form?success";
+    public String registerUser(@ModelAttribute("user") RegistrationRequest registration,@RequestParam("g-recaptcha-response") String captcha, HttpServletRequest request, Model model) {
+
+        boolean captchaValid = recaptchaService.isValid(captcha);
+
+        if (!captchaValid) {
+            UserEntity user = userService.registerUser(registration);
+            publisher.publishEvent(new RegistrationCompleteEvent(user, UrlUtil.getApplicationUrl(request)));
+            return "redirect:/registration/form?success";
+        } else {
+            model.addAttribute("error", "Captcha invalido");
+            return "redirect:/registration/form";
+        }
+
     }
 
     @GetMapping("/verifyEmail")
