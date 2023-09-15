@@ -58,7 +58,7 @@ public class HomeController {
         return "fragments/base";
     }
 
-    @GetMapping("/tasks/table")
+    @GetMapping("/task/table")
     public String showTaskTable(Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
         if (principal != null) {
             String userEmail = principal.getName();

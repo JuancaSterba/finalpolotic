@@ -7,6 +7,9 @@ import com.polotic.taskmanager.security.user.IUserService;
 import com.polotic.taskmanager.service.ITaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,13 +28,14 @@ public class TaskController {
 
     // crear
     @GetMapping
-    public String showTaskForm(Model model) {
+    public String showTaskForm(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         TaskRequestDTO task = new TaskRequestDTO();
         List<TaskPriority> opciones = List.of(TaskPriority.values());
         model.addAttribute("task", task);
         model.addAttribute("opciones", opciones);
         model.addAttribute("vista", "fragments/newTask");
         model.addAttribute("titulo", "Nueva tarea");
+        model.addAttribute("userDetails", userDetails);
         return "fragments/base";
     }
 

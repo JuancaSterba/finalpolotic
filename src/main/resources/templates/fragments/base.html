@@ -5,18 +5,18 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="icon" href="img/tarea-ico.png">
+    <link rel="icon" th:href="@{/img/tarea-ico.png}">
     <title th:text="${'Gestor de tareas' + titulo}"></title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css}" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 
     <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/e81adcd316.js" crossorigin="anonymous"></script>
+    <script th:src="@{https://kit.fontawesome.com/e81adcd316.js}" crossorigin="anonymous"></script>
 
     <!-- Recaptcha -->
     <script th:src="@{https://www.google.com/recaptcha/api.js}" async defer></script>
@@ -79,7 +79,7 @@
 
 <!-- Contenido -->
 <div class="container main-content">
-    <div class="container" th:replace="~{${vista} :: contenido}"></div>
+    <div th:replace="~{${vista} :: contenido}"></div>
 </div>
 <!-- Contenido -->
 
@@ -91,16 +91,9 @@
 </footer>
 
 <!-- Bootstrap Bundle with Popper JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js}"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
-<!-- Formulario -->
-<script>
-   function onSubmit(token) {
-     document.getElementById("demo-form").submit();
-   }
- </script>
 
 </body>
 </html>

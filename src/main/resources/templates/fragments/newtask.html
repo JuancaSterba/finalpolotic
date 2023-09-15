@@ -1,48 +1,51 @@
-<div class="container my-2" th:fragment="contenido">
-    <div class="card bg-light">
+<div th:fragment="contenido">
+    <div class="card bg-light mt-5">
         <div class="card-header bg-dark text-white" th:text="${titulo}"></div>
-        <div class="card-body"></div>
+        
         <form method="post" th:action="@{/task/save}" th:object="${task}">
             <div class="card-body">
                 <div class="row mb-3">
-                    <label class="col-md-2" for="title">Título:</label>
-                    <div class="col-md-6">
+                    <label class="col-md-4" for="title">Título:</label>
+                    <div>
                         <input type="text" id="title" name="title" th:field="*{title}" required autofocus="autofocus"
                                class="form-control form-control-sm col-md-6" placeholder="Título"/>
                         <p class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-md-2" for="description">Descripción:</label>
-                    <div class="col-md-6">
+                    <label class="col-md-4" for="description">Descripción:</label>
+                    <div>
                         <input type="text" id="description" name="description" th:field="*{description}" required autofocus="autofocus"
                                class="form-control form-control-sm col-md-6" placeholder="Descripción"/>
                         <p class="form-text text-danger" th:if="${#fields.hasErrors('description')}"
                            th:errors="*{description}"></p></div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-md-2" for="expirationDate"
-                    >Fecha de vencimiento:</label
-                    >
-                    <div class="col-md-6">
+                    <label class="col-md-4" for="expirationDate">Fecha de vencimiento:</label>
+                    <div>
                         <input type="date" th:field="*{expirationDate}" class="form-control form-control-sm col-md-6"
-                               id="expirationDate" name="expirationDate" placeholder="Fecha de vencimiento"/> <small></small>
+                               id="expirationDate" name="expirationDate" placeholder="Fecha de vencimiento" required/> <small></small>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-md-2" for="priority">Prioridad:</label>
-                    <div class="col-md-6">
+                    <label class="col-md-4" for="priority">Prioridad:</label>
+                    <div>
                         <select th:field="*{priority}" class="form-control form-control-sm" id="priority"
                                 name="priority">
                             <option th:each="opcion : ${opciones}" th:value="${opcion}" th:text="${opcion}"></option>
                         </select>
                     </div>
-                    <small></small>
                 </div>
             </div>
-            <div class="card-footer bg-dark">
-                <input type="submit" class="btn btn-primary btn-sm" value="Guardar"/>
+            <div class="card-footer bg-dark d-flex justify-content-end">
+                <div class="col-md-2">
+                    <input type="submit" class="btn btn-primary btn-sm" value="Guardar"/>
+                </div>
+                <div>
+                    <a th:href="@{/}" class="btn btn-secondary btn-sm">Cancelar</a>
+                </div>
             </div>
         </form>
     </div>
+    <script th:src="@{/js/validation.js}"></script>
 </div>
