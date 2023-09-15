@@ -24,9 +24,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * @author Sampson Alfred
- */
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
@@ -54,7 +51,6 @@ public class HomeController {
         } else {
             model.addAttribute("vista", "index");
             model.addAttribute("titulo", "Inicio");
-            model.addAttribute("loggedIn", principal != null);
         }
 
         model.addAttribute("userDetails", userDetails);
@@ -63,7 +59,7 @@ public class HomeController {
     }
 
     @GetMapping("/tasks/table")
-    public String showTaskTable(Model model, Principal principal) {
+    public String showTaskTable(Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
         if (principal != null) {
             String userEmail = principal.getName();
             Optional<UserEntity> userOptional = userService.findByEmail(userEmail);
@@ -77,6 +73,8 @@ public class HomeController {
                 model.addAttribute("titulo", "Lista de tareas");
             }
         }
+
+        model.addAttribute("userDetails", userDetails);
 
         return "fragments/base";
     }

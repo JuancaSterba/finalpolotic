@@ -15,10 +15,10 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${task.title}"></h5>
                         <p class="card-text" th:text="${task.description}"></p>
-                        <p class="card-text"><strong>Priority:</strong> <span th:text="${task.priority}"></span></p>
-                        <p class="card-text"><strong>Status:</strong> <span th:text="${task.status}"></span></p>
-                        <p class="card-text"><strong>Creation Date:</strong> <span th:text="${task.creationDate}"></span></p>
-                        <p class="card-text"><strong>Expiration Date:</strong> <span th:text="${task.expirationDate}"></span></p>
+                        <!--<p class="card-text"><strong>Priority:</strong> <span th:text="${task.priority}"></span></p>-->
+                        <p class="card-text"><strong>Estado:</strong> <span th:text="${task.status}"></span></p>
+                        <p class="card-text"><strong>Creado:</strong> <span th:text="${task.creationDate}"></span></p>
+                        <p class="card-text"><strong>Vence:</strong> <span th:text="${task.expirationDate}"></span></p>
                         <a th:href="@{/task/edit/{id}(id=${task.id})}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                         <a th:href="@{/task/done/{id}(id=${task.id})}" class="btn btn-success"><i class="fas fa-check"></i></a>
                         <form th:action="@{/task/delete/{id}(id=${task.id})}" th:method="DELETE" class="d-inline">
