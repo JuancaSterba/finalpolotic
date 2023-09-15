@@ -41,11 +41,11 @@ public class TaskController {
 
     // guardar
     @PostMapping("/save")
-    public String saveTask(@Valid TaskRequestDTO task, BindingResult bindingResult, Model model, Principal principal) {
+    public String saveTask(@Valid TaskRequestDTO task, BindingResult bindingResult, Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("task", task);
-            return this.showTaskForm(model);
+            return showTaskForm(model, userDetails);
         }
 
         Long userId = userService.findByEmail(principal.getName()).get().getId();
@@ -68,10 +68,10 @@ public class TaskController {
     }
 
     @PutMapping("/edit/{id}")
-    public String updateTask(@PathVariable("id") Long id, @Valid TaskRequestDTO task, BindingResult bindingResult, Model model) {
+    public String updateTask(@PathVariable("id") Long id, @Valid TaskRequestDTO task, BindingResult bindingResult, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("task", task);
-            return this.showTaskForm(model);
+            return showTaskForm(model, userDetails);
         }
         taskService.update(task, id); // Llamar al método update en el servicio
         return "redirect:/";
