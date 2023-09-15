@@ -12,6 +12,7 @@ import com.polotic.taskmanager.security.user.UserRepository;
 import com.polotic.taskmanager.service.ITaskService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -76,6 +77,28 @@ public class TaskServiceImpl implements ITaskService {
             existingTask.setStatus(TaskStatus.TERMINADO);
             taskDAO.save(existingTask);
         }
+    }
+
+    /**
+     * @Scheduled(cron = "0 0 0 * * *") // Ejecutar a las 00:00 horas diariamente
+     *     public void updateExpiredTasks() {
+     *         List<Task> expiredTasks = taskDAO.findExpiredTasks(LocalDate.now(), TaskStatus.VENCIDO);
+     *         for (Task task : expiredTasks) {
+     *             task.setStatus(TaskStatus.VENCIDO);
+     *             taskDAO.save(task);
+     *         }
+     *     }
+     */
+
+    @Scheduled(fixedRate = 60000) // Ejecutar cada minuto
+    public void updateExpiredTasks() {
+        List<Task> expiredTasks = taskDAO.findExpiredTasks(LocalDate.now(), TaskStatus.PENDIENTE);
+        for (Task task : expiredTasks) {
+            task.setStatus(TaskStatus.VENCIDO);
+            task.setPriority(TaskPriority.ALTA);
+            taskDAO.save(task);
+        }
+        System.out.println("Tareas vencidas actualizadas: " + expiredTasks.size());
     }
 
 }
