@@ -41,31 +41,28 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
     }
 
     public void sendVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
-        String subject = "Email Verification";
-        String senderName = "Users Verification Service";
-        String mailContent = "<p> Hi, " + userEntity.getName() + ", </p>" +
-                "<p>Thank you for registering with us," + "" +
-                "Please, follow the link below to complete your registration.</p>" +
-                "<a href=\"" + url + "\">Verify your email to activate your account</a>" +
-                "<p> Thank you <br> Users Registration Portal Service";
+        String subject = "Verificación de correo electrónico";
+        String senderName = "Servicio de Verificación de Usuarios";
+        String mailContent = "<p> ¡Hola, " + userEntity.getName() + "!</p>" +
+                "<p>Gracias por registrarte con nosotros. Por favor, sigue el enlace a continuación para completar tu registro.</p>" +
+                "<a href=\"" + url + "\">Verifica tu correo electrónico para activar tu cuenta</a>" +
+                "<p>Gracias. <br> Servicio de Registro de Usuarios</p>";
         emailMessage(subject, senderName, mailContent, mailSender, userEntity);
     }
 
 
     public void sendPasswordResetVerificationEmail(String url) throws MessagingException, UnsupportedEncodingException {
-        String subject = "Password Reset Request Verification";
-        String senderName = "Users Verification Service";
-        String mailContent = "<p> Hi, " + userEntity.getName() + ", </p>" +
-                "<p><b>You recently requested to reset your password,</b>" + "" +
-                "Please, follow the link below to complete the action.</p>" +
-                "<a href=\"" + url + "\">Reset password</a>" +
-                "<p> Users Registration Portal Service";
+        String subject = "Verificación de solicitud de restablecimiento de contraseña";
+        String senderName = "Servicio de Verificación de Usuarios";
+        String mailContent = "<p> ¡Hola, " + userEntity.getName() + "!</p>" +
+                "<p><b>Recientemente solicitaste restablecer tu contraseña,</b>" + "" +
+                "Por favor, sigue el enlace a continuación para completar la acción.</p>" +
+                "<a href=\"" + url + "\">Restablecer contraseña</a>" +
+                "<p> Servicio de Registro de Usuarios</p>";
         emailMessage(subject, senderName, mailContent, mailSender, userEntity);
     }
 
-    private static void emailMessage(String subject, String senderName,
-                                     String mailContent, JavaMailSender mailSender, UserEntity theUser)
-            throws MessagingException, UnsupportedEncodingException {
+    private static void emailMessage(String subject, String senderName, String mailContent, JavaMailSender mailSender, UserEntity theUser) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         var messageHelper = new MimeMessageHelper(message);
         messageHelper.setFrom("sjcexe@gmail.com", senderName);

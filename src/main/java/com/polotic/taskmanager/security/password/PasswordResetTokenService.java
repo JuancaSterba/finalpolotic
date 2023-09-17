@@ -32,7 +32,8 @@ public class PasswordResetTokenService implements IPasswordResetTokenService {
 
     @Override
     public Optional<UserEntity> findUserByPasswordResetToken(String theToken) {
-        return Optional.ofNullable(passwordResetTokenRepository.findByToken(theToken).get().getUser());
+        Optional<PasswordResetToken> passwordResetToken = passwordResetTokenRepository.findByToken(theToken);
+        return passwordResetToken.map(PasswordResetToken::getUser);
     }
 
     @Override
