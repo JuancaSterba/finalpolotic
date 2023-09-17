@@ -84,8 +84,10 @@ public class RegistrationController {
     }
 
     @GetMapping("/forgot-password-request")
-    public String forgotPasswordForm() {
-        return "forgot-password-form";
+    public String forgotPasswordForm(Model model) {
+        model.addAttribute("vista", "user/forgot-password-form");
+        model.addAttribute("titulo", "Solicitud de Restablecimiento de Contraseña");
+        return "fragments/base";
     }
 
     @PostMapping("/forgot-password")
@@ -93,7 +95,7 @@ public class RegistrationController {
         String email = request.getParameter("email");
         Optional<UserEntity> user = userService.findByEmail(email);
         if (user.isEmpty()) {
-            return "redirect:/registration/forgot-password-request?not_fond";
+            return "redirect:/registration/forgot-password-request?not_found";
         }
         String passwordResetToken = UUID.randomUUID().toString();
         passwordResetTokenService.createPasswordResetTokenForUser(user.get(), passwordResetToken);
