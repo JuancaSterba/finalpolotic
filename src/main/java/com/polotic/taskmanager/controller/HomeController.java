@@ -87,8 +87,10 @@ public class HomeController {
     }
 
     @GetMapping("/error")
-    public String error() {
-        return "error";
+    public String error(Model model) {
+        model.addAttribute("vista", "error/error");
+        model.addAttribute("titulo", "Error");
+        return "fragments/base";
     }
 
     private List<TaskResponseDTO> getTaskDTOsByUser(UserEntity user) {

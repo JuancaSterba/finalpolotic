@@ -51,8 +51,7 @@ public class RegistrationController {
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") RegistrationRequest registration,
                                @RequestParam("g-recaptcha-response") String captcha,
-                               HttpServletRequest request,
-                               Model model) {
+                               HttpServletRequest request) {
 
         boolean captchaValid = recaptchaService.isValid(captcha);
         if (captchaValid) {
@@ -60,8 +59,7 @@ public class RegistrationController {
             publisher.publishEvent(new RegistrationCompleteEvent(user, UrlUtil.getApplicationUrl(request)));
             return "redirect:/registration/form?success";
         } else {
-            model.addAttribute("error", "Captcha invalido");
-            return "redirect:/registration/form";
+            return "redirect:/registration/form?error";
         }
 
     }
@@ -102,7 +100,7 @@ public class RegistrationController {
         //send password reset verification email to the user
         String url = UrlUtil.getApplicationUrl(request) + "/registration/password-reset-form?token=" + passwordResetToken;
         try {
-            eventListener.sendPasswordResetVerificationEmail(url);
+            eventListener.sendPasswordResetVerificationEmail(user.get(),url);
         } catch (MessagingException | UnsupportedEncodingException e) {
             model.addAttribute("error", e.getMessage());
         }
@@ -111,8 +109,10 @@ public class RegistrationController {
 
     @GetMapping("/password-reset-form")
     public String passwordResetForm(@RequestParam("token") String token, Model model) {
+        model.addAttribute("vista", "user/password-reset-form");
+        model.addAttribute("titulo", "Restablecer contraseña");
         model.addAttribute("token", token);
-        return "password-reset-form";
+        return "fragments/base";
     }
 
     @PostMapping("/reset-password")

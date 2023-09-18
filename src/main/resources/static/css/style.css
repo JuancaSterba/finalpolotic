@@ -46,3 +46,9 @@ footer {
 .body-content {
   margin-bottom: 60px; /* Ajusta el valor según la altura del footer */
 }
+
+.highlight {
+  font-weight: bold;
+  color: #0a3882;
+  font-size: 24px;
+}

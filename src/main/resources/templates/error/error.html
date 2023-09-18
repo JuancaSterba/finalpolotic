@@ -1,0 +1,18 @@
+<div class="container offset-sm-3 col-md-8 mt-lg-5" th:fragment="contenido">
+    <!-- show errors if any . -->
+
+        <div class="row mt-2">
+            <div th:if="${param.invalid_token}" class="col-sm-8">
+                <p class="alert alert-danger">Token de verificación no válido.</p>
+            </div>
+
+            <div th:if="${param.not_found}" class="col-sm-8">
+                <p class="alert alert-danger">Error: no encontrado.</p>
+            </div>
+
+            <div th:if="${param.expired}" class="col-sm-8">
+                <p class="alert alert-info">Token de verificación ha expirado.</p>
+            </div>
+        </div>
+    <a class="btn btn-primary" th:href="@{/}">Volver</a>
+</div>
