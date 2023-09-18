@@ -100,4 +100,12 @@ public class HomeController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/about")
+    public String about(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        model.addAttribute("vista", "fragments/about");
+        model.addAttribute("titulo", "Acerca de");
+        model.addAttribute("userDetails", userDetails);
+        return "fragments/base";
+    }
+
 }
